@@ -1,8 +1,10 @@
 const apiKey = "6b2a8ed792083ac4eeffb531cd604100";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
+
 async function checkWeather(city) {
 	const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
@@ -39,13 +41,14 @@ async function checkWeather(city) {
 
 		document.querySelector(".weather").style.display = "block";
 		document.querySelector(".error").style.display = "none";
-
 	}
 }
 
 searchBtn.addEventListener("click", () => {
 	checkWeather(searchBox.value);
-})
+});
+
+/* FIX: Enter key support (mobile friendly) */
 searchBox.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
         checkWeather(searchBox.value);
