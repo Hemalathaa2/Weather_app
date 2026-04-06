@@ -7,7 +7,7 @@
 
 /* FIXED background issue */
 body{
-    background-image:url("pexels-james-wheeler-417074.jpg");
+    background-image:url("image.jpg");
     background-size: cover;
     background-repeat: no-repeat;   /* FIX */
     background-position: center;    /* FIX */
