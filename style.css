@@ -1,159 +1,158 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Poppins' , sans-serif;
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
 }
 
-/* FIXED background issue */
+/* 🌈 Gradient Background */
 body{
-    background-image:url("image.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;   /* FIX */
-    background-position: center;    /* FIX */
-    background-attachment: fixed;   /* FIX */
+    min-height: 100vh;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* original */
+/* Heading */
 .heading{
-    text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    color: white;
+    font-size: 32px;
+    letter-spacing: 1px;
 }
 
+/* 🧊 Glass Card */
 .card{
     width: 90%;
-    max-width: 470px;
-    background-color:#dfdddd76;
-    color: #070707;
-    margin: 40px auto 0;
+    max-width: 420px;
+    margin-top: 30px;
+    padding: 30px 25px;
     border-radius: 20px;
-    padding: 40px 35px;
-    text-align: center;
 
-    overflow: hidden;   /* FIX: prevents cropping */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+
+    text-align: center;
+    color: white;
 }
 
+/* 🔍 Search */
 .search{
-    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    gap: 10px;
 }
 
 .search input{
-    border :0;
-    outline: 0;
-    background: #ebfffc;
-    color: #555;
-    padding: 10px 25px;
-    height : 60px;
-    border-radius: 30px;
     flex: 1;
-    margin-right: 16px;
-    font-size: 18px;
+    padding: 12px 18px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.search input::placeholder{
+    color: #eee;
 }
 
 .search button{
-    border: 0;
-    outline: 0;
-    background: #ebfffc;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    border: none;
     cursor: pointer;
+
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.3s;
+}
+
+.search button:hover{
+    transform: scale(1.1);
 }
 
 .search button img{
-    width: 16px;
+    width: 18px;
 }
 
+/* 🌦 Weather */
 .weather-icon{
-    width: 170px;
-    margin-top: 30px;
+    width: 120px;
+    margin-top: 20px;
 }
 
-.weather h1{
-    font-size: 80px;
-    font-weight: 500;
-    word-wrap: break-word;   /* FIX */
+.temp{
+    font-size: 50px;
+    margin-top: 10px;
 }
 
-.weather h2{
-    font-size: 45px;
-    font-weight: 400;
-    margin-top: -10px;
+.city{
+    font-size: 28px;
+    margin-top: 5px;
 }
 
+/* 📊 Details */
 .details{
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding : 0 20px;
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 .col{
     display: flex;
     align-items: center;
-    text-align: left;
+    gap: 10px;
 }
 
 .col img{
-    width: 40px;
-    margin-right: 10px;
+    width: 30px;
 }
 
 .humidity, .wind{
-    font-size: 28px;
-    margin-top: -6px;
+    font-size: 20px;
 }
 
+/* ❌ Error */
+.error{
+    margin-top: 10px;
+    color: #ffb3b3;
+    display: none;
+}
+
+/* Hide initially */
 .weather{
     display: none;
 }
 
-.error{
-    text-align: left;
-    margin-left: 10px;
-    margin-top: 10px;
-    font-size: 14px;
-    display: none;
-}
+/* 📱 Mobile */
+@media (max-width: 600px){
 
-/* ===== MOBILE FIX (only adjusted, not replaced design) ===== */
-
-@media (max-width: 768px) {
-
-    .card {
-        width: 95%;
-        padding: 20px;
+    .heading{
+        font-size: 24px;
     }
 
-    .weather h1 {
-        font-size: 50px;
+    .temp{
+        font-size: 40px;
     }
 
-    .weather h2 {
-        font-size: 28px;
+    .city{
+        font-size: 22px;
     }
 
-    .search input {
-        height: 50px;
-        font-size: 16px;
-    }
-
-    .search button {
-        width: 50px;
-        height: 50px;
-    }
-
-    .details {
-        flex-direction: column;   /* FIX */
-        gap: 20px;
-    }
-
-    .col {
-        justify-content: center;
-        text-align: center;
+    .details{
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
     }
 }
