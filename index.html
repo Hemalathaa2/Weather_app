@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- FIX: correct viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App</title>
-  <link rel="stylesheet" href="weather app.css">
+
+  <!-- ✅ FIXED FILE NAME -->
+  <link rel="stylesheet" href="style.css">
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -15,7 +17,9 @@
   <div class="card">
     <div class="search">
       <input type="text" placeholder="Enter city name" spellcheck="false">
-      <button><img src="WhatsApp Image 2024-01-29 at 9.46.27 PM.jpeg"></button>
+      <button>
+        <img src="search.png"> <!-- ⚠️ better rename image -->
+      </button>
     </div>
 
     <div class="error">
@@ -26,6 +30,7 @@
       <img src="rain.png" class="weather-icon">
       <p class="temp">22°C</p>
       <h2 class="city">New York</h2>
+
       <div class="details">
         <div class="col">
           <img src="humidity.png">
@@ -34,6 +39,7 @@
             <p>Humidity</p>
           </div>
         </div>
+
         <div class="col">
           <img src="drizzle.png">
           <div>
@@ -45,7 +51,8 @@
     </div>
   </div>
 
-  <script src="weather app.js"></script>
+  <!-- ✅ FIXED FILE NAME -->
+  <script src="script.js"></script>
 
 </body>
 </html>
