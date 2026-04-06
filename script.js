@@ -6,44 +6,64 @@ const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 
 async function checkWeather(city) {
-	const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
-	if (response.status == 404) {
-		document.querySelector(".error").style.display = "block";
-		document.querySelector(".weather").style.display = "none";
-	}
-	else {
-		var data = await response.json();
+    try {
+        // Try multiple search formats
+        let geoData = [];
 
-		document.querySelector(".city").innerHTML = data.name;
-		document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
-		document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-		document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+        // 1️⃣ Direct search
+        let geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+        geoData = await geoRes.json();
 
-		if (data.weather[0].main == "Clouds") {
-			weatherIcon.src = "clouds.png";
-		}
-		else if (data.weather[0].main == "Clear") {
-			weatherIcon.src = "clear.png";
-		}
-		else if (data.weather[0].main == "Rain") {
-			weatherIcon.src = "rain.png";
-		}
-		else if (data.weather[0].main == "Drizzle") {
-			weatherIcon.src = "drizzle.png";
-		}
-		else if (data.weather[0].main == "Mist") {
-			weatherIcon.src = "mist.png";
-		}
-		else if (data.weather[0].main == "Snow") {
-			weatherIcon.src = "snow.png";
-		}
+        // 2️⃣ If not found, try with India (helps for places like Kodagu, Kashmir)
+        if (geoData.length === 0) {
+            geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city},IN&limit=1&appid=${apiKey}`);
+            geoData = await geoRes.json();
+        }
 
-		document.querySelector(".weather").style.display = "block";
-		document.querySelector(".error").style.display = "none";
-	}
+        // 3️⃣ If still not found → show error
+        if (geoData.length === 0) {
+            document.querySelector(".error").style.display = "block";
+            document.querySelector(".weather").style.display = "none";
+            return;
+        }
+
+        const { lat, lon, name, country } = geoData[0];
+
+        // Fetch weather
+        const weatherRes = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+        );
+
+        const data = await weatherRes.json();
+
+        // UI update
+        document.querySelector(".city").innerHTML = `${name}, ${country}`;
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+
+        const condition = data.weather[0].main;
+
+        // Icon
+        if (condition == "Clouds") weatherIcon.src = "clouds.png";
+        else if (condition == "Clear") weatherIcon.src = "clear.png";
+        else if (condition == "Rain") weatherIcon.src = "rain.png";
+        else if (condition == "Drizzle") weatherIcon.src = "drizzle.png";
+        else if (condition == "Mist") weatherIcon.src = "mist.png";
+        else if (condition == "Snow") weatherIcon.src = "snow.png";
+
+        // Background change
+        changeBackground(condition);
+
+        document.querySelector(".weather").style.display = "block";
+        document.querySelector(".error").style.display = "none";
+
+    } catch (error) {
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+    }
 }
-
 searchBtn.addEventListener("click", () => {
 	checkWeather(searchBox.value);
 });
@@ -54,3 +74,29 @@ searchBox.addEventListener("keypress", function(e) {
         checkWeather(searchBox.value);
     }
 });
+function changeBackground(condition) {
+
+    const body = document.body;
+
+    if (condition === "Clear") {
+        body.style.background = "linear-gradient(135deg, #fceabb, #f8b500)";
+    }
+    else if (condition === "Clouds") {
+        body.style.background = "linear-gradient(135deg, #bdc3c7, #2c3e50)";
+    }
+    else if (condition === "Rain") {
+        body.style.background = "linear-gradient(135deg, #4b79a1, #283e51)";
+    }
+    else if (condition === "Drizzle") {
+        body.style.background = "linear-gradient(135deg, #89f7fe, #66a6ff)";
+    }
+    else if (condition === "Mist") {
+        body.style.background = "linear-gradient(135deg, #d7d2cc, #304352)";
+    }
+    else if (condition === "Snow") {
+        body.style.background = "linear-gradient(135deg, #e6dada, #274046)";
+    }
+    else {
+        body.style.background = "linear-gradient(135deg, #00c6ff, #0072ff)";
+    }
+}
