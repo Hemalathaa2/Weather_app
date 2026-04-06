@@ -74,29 +74,3 @@ searchBox.addEventListener("keypress", function(e) {
         checkWeather(searchBox.value);
     }
 });
-function changeBackground(condition) {
-
-    const body = document.body;
-
-    if (condition === "Clear") {
-        body.style.background = "linear-gradient(135deg, #fceabb, #f8b500)";
-    }
-    else if (condition === "Clouds") {
-        body.style.background = "linear-gradient(135deg, #bdc3c7, #2c3e50)";
-    }
-    else if (condition === "Rain") {
-        body.style.background = "linear-gradient(135deg, #4b79a1, #283e51)";
-    }
-    else if (condition === "Drizzle") {
-        body.style.background = "linear-gradient(135deg, #89f7fe, #66a6ff)";
-    }
-    else if (condition === "Mist") {
-        body.style.background = "linear-gradient(135deg, #d7d2cc, #304352)";
-    }
-    else if (condition === "Snow") {
-        body.style.background = "linear-gradient(135deg, #e6dada, #274046)";
-    }
-    else {
-        body.style.background = "linear-gradient(135deg, #00c6ff, #0072ff)";
-    }
-}
